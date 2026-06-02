@@ -1,0 +1,43 @@
+.hero-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.hero-title-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 19px;
+  z-index: 10;
+}
+
+.hero-background-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -10;
+}
+
+.hero-ee-image {
+  object-fit: contain;
+}
+
+.hero-description {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hero-description-right {
+  margin-left: 80.35%;
+}
+
+.hero-description-left {
+  margin-left: 8.35%;
+}
+
+.hero-description-text {
+  font-family: var(--font-gothic);
+  font-size: 20px;
+}
