@@ -9,7 +9,7 @@ import { CvSection } from "./ui/CvSection";
 
 export const HomePage: FC = () => {
   const [activeSection, setActiveSection] =
-    useState<THeaderSwitchOptions>("portfolio");
+    useState<THeaderSwitchOptions>("cv");
 
   return (
     <>
@@ -17,7 +17,7 @@ export const HomePage: FC = () => {
         activeSection={activeSection}
         onSectionChange={setActiveSection}
       />
-      <main className="pt-[152px]">
+      <main className="pt-[102px]">
         {activeSection === "portfolio" ? (
           <>
             <HeroSection />

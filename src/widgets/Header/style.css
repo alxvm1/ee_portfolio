@@ -41,16 +41,33 @@
   font-size: 16px;
 }
 
-.header-contacts-button {
-  background-color: transparent;
-  height: 52px;
-  border-radius: 32px;
-  border: 1px solid var(--color-button-border);
-  padding: 13px 19px;
-  font-family: var(--font-gothic);
-  font-size: 16px;
+.header-contacts-button-desktop {
+  display: none;
+}
 
-  &:hover {
-    border-color: var(--color-button-border-hover);
+@media (min-width: 768px) {
+  .header-contacts-button-desktop {
+    display: flex;
+    background-color: transparent;
+    height: 52px;
+    border-radius: 32px;
+    border: 1px solid var(--color-button-border);
+    padding: 13px 19px;
+    font-family: var(--font-gothic);
+    font-size: 16px;
+
+    &:hover {
+      border-color: var(--color-button-border-hover);
+    }
+  }
+}
+
+.header-contacts-button-mobile {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .header-contacts-button-mobile {
+    display: none;
   }
 }

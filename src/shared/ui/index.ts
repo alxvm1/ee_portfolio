@@ -14,3 +14,4 @@ export { Label } from "./Label";
 export { Separator } from "./Separator";
 export { Textarea } from "./Textarea";
 export { Accordion } from "./Accordion";
+export { CircularProgress } from "./CircularProgress";

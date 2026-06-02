@@ -6,21 +6,23 @@ import {
 } from "@/shared/ui/Accordion";
 import type { FC } from "react";
 import "./style.css";
-import FigmaIcon from "../../assets/svg/figmaIcon.svg?react";
-import PhotoshopIcon from "../../assets/svg/photoshopIcon.svg?react";
-import IllustratorIcon from "../../assets/svg/illustratorIcon.svg?react";
-import CorelDRAWIcon from "../../assets/svg/coreldrawIcon.svg?react";
-import MaxIcon from "../../assets/svg/3dsIcon.svg?react";
-import { DotProgress } from "@/shared/ui/DotProgress";
+import { CircularProgress } from "@/shared/ui/CircularProgress";
 import eeImage from "../../assets/images/eeImage.png";
 
 export const CvSection: FC = () => {
   return (
     <section id="cv" className="cv-section">
-      <p className="cv-section-title">РЕЗЮМЕ</p>
-      <div className="flex flex-row w-full gap-10">
+      <div className="cv-section-title-wrapper">
         <img src={eeImage} className="cv-section-ee-image" alt="ee-image" />
-        <Accordion type="multiple" className="cv-section-accordion flex-1">
+        <p className="cv-section-title">РЕЗЮМЕ</p>
+      </div>
+
+      <div className="flex flex-row w-full gap-10">
+        <Accordion
+          type="single"
+          collapsible
+          className="cv-section-accordion flex-1"
+        >
           <AccordionItem value="item-1">
             <AccordionTrigger>
               <p className="cv-section-title-text">ОБО МНЕ</p>
@@ -44,23 +46,17 @@ export const CvSection: FC = () => {
                   </p>
                 </div>
                 <div className="flex flex-col gap-5">
-                  <div className="flex flex-row gap-3">
+                  <div className="flex flex-col gap-3 items-center cv-section-item-background">
                     <p className="cv-section-description-text">ФИО:</p>
                     <p className="cv-section-title-text">
                       Ребизова Екатерина Евгеньевна
                     </p>
                   </div>
-                  <div className="flex flex-row gap-3">
+                  <div className="flex flex-col gap-3 items-center cv-section-item-background">
                     <p className="cv-section-description-text">Год рождения:</p>
                     <p className="cv-section-title-text">2002</p>
                   </div>
-                  <div className="flex flex-row gap-3">
-                    <p className="cv-section-description-text">
-                      Город проживания:
-                    </p>
-                    <p className="cv-section-title-text">Томск</p>
-                  </div>
-                  <div className="flex flex-row gap-3">
+                  <div className="flex flex-col gap-3 items-center cv-section-item-background">
                     <p className="cv-section-description-text">
                       Условия труда:
                     </p>
@@ -78,8 +74,7 @@ export const CvSection: FC = () => {
             </AccordionTrigger>
             <AccordionContent>
               <div className="flex flex-col gap-10">
-                <div className="flex flex-row gap-8">
-                  <p className="cv-section-accent-title-text">/1</p>
+                <div className="flex flex-row gap-8 cv-section-item-background">
                   <div className="flex flex-col">
                     <p className="cv-section-title-text">UI/UX дизайн</p>
                     <p className="cv-section-description-text">
@@ -88,8 +83,7 @@ export const CvSection: FC = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex flex-row gap-8">
-                  <p className="cv-section-accent-title-text">/2</p>
+                <div className="flex flex-row gap-8 cv-section-item-background">
                   <div className="flex flex-col">
                     <p className="cv-section-title-text">Web - дизайн</p>
                     <p className="cv-section-description-text">
@@ -98,8 +92,7 @@ export const CvSection: FC = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex flex-row gap-8">
-                  <p className="cv-section-accent-title-text">/3</p>
+                <div className="flex flex-row gap-8 cv-section-item-background">
                   <div className="flex flex-col">
                     <p className="cv-section-title-text">Графическими дизайн</p>
                     <p className="cv-section-description-text">
@@ -109,8 +102,7 @@ export const CvSection: FC = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex flex-row gap-8">
-                  <p className="cv-section-accent-title-text">/4</p>
+                <div className="flex flex-row gap-8 cv-section-item-background">
                   <div className="flex flex-col">
                     <p className="cv-section-title-text">Иллюстрации</p>
                     <p className="cv-section-description-text">
@@ -127,71 +119,12 @@ export const CvSection: FC = () => {
               <p className="cv-section-title-text">ПРОГРАММЫ</p>
             </AccordionTrigger>
             <AccordionContent>
-              <div className="flex flex-col gap-3">
-                <div className="flex flex-row items-center gap-8">
-                  <div className="cv-section-software-bubble">
-                    <FigmaIcon />
-                    <div>
-                      <span className="cv-section-software-title">Figma</span>
-                      <DotProgress value={5} />
-                    </div>
-                  </div>
-                  <p className="cv-section-description-text">
-                    Сайты, графика, интерфейсы
-                  </p>
-                </div>
-                <div className="flex flex-row items-center gap-8">
-                  <div className="cv-section-software-bubble">
-                    <PhotoshopIcon />
-                    <div>
-                      <span className="cv-section-software-title">
-                        Photoshop
-                      </span>
-                      <DotProgress value={4} />
-                    </div>
-                  </div>
-                  <p className="cv-section-description-text">
-                    Иллюстрации, обработка фото
-                  </p>
-                </div>
-                <div className="flex flex-row items-center gap-8">
-                  <div className="cv-section-software-bubble">
-                    <IllustratorIcon />
-                    <div>
-                      <span className="cv-section-software-title">
-                        Illustrator
-                      </span>
-                      <DotProgress value={3} />
-                    </div>
-                  </div>
-                  <p className="cv-section-description-text">
-                    Векторные иллюстрации
-                  </p>
-                </div>
-                <div className="flex flex-row items-center gap-8">
-                  <div className="cv-section-software-bubble">
-                    <CorelDRAWIcon />
-                    <div>
-                      <span className="cv-section-software-title">
-                        CorelDRAW
-                      </span>
-                      <DotProgress value={3} />
-                    </div>
-                  </div>
-                  <p className="cv-section-description-text">
-                    Подготовка макетов к печати
-                  </p>
-                </div>
-                <div className="flex flex-row items-center gap-8">
-                  <div className="cv-section-software-bubble">
-                    <MaxIcon />
-                    <div>
-                      <span className="cv-section-software-title">3ds Max</span>
-                      <DotProgress value={2} />
-                    </div>
-                  </div>
-                  <p className="cv-section-description-text">3D графика</p>
-                </div>
+              <div className="cv-section-software-wrapper">
+                <CircularProgress value={90} label="Figma" />
+                <CircularProgress value={80} label="Photoshop" />
+                <CircularProgress value={60} label="Illustrator" />
+                <CircularProgress value={60} label="CorelDRAW" />
+                <CircularProgress value={40} label="3ds Max" />
               </div>
             </AccordionContent>
           </AccordionItem>
@@ -201,50 +134,42 @@ export const CvSection: FC = () => {
             </AccordionTrigger>
             <AccordionContent>
               <div className="flex flex-col gap-10">
-                <div className="flex flex-col gap-2">
-                  <div className="flex flex-row gap-2">
-                    <span className="cv-section-accent-title-text">
-                      2020 - 2024
-                    </span>
-                    <span className="cv-section-title-text">[ТГАСУ]</span>
-                  </div>
+                <div className="flex flex-col gap-2 cv-section-item-background">
+                  <span className="cv-section-title-text">ТГАСУ</span>
+                  <span className="cv-section-description-text text-[#b1b1b1]">
+                    2020 - 2024
+                  </span>
                   <span className="cv-section-description-text">
                     Томский государственный архитектурно-строительный
                     университет, Архитектурный факультет, направление
                     архитектура
                   </span>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <div className="flex flex-row gap-2">
-                    <span className="cv-section-accent-title-text">
-                      2023 - 2024
-                    </span>
-                    <span className="cv-section-title-text">[Нетология]</span>
-                  </div>
+                <div className="flex flex-col gap-2 cv-section-item-background">
+                  <span className="cv-section-title-text">Нетология</span>
+                  <span className="cv-section-description-text text-[#b1b1b1]">
+                    2023 - 2024
+                  </span>
                   <span className="cv-section-description-text">
                     Курс, Графический дизайн и коммуникации
                   </span>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <div className="flex flex-row gap-2">
-                    <span className="cv-section-accent-title-text">
-                      2024 - 2026
-                    </span>
-                    <span className="cv-section-title-text">[ТГАСУ]</span>
-                  </div>
+                <div className="flex flex-col gap-2 cv-section-item-background">
+                  <span className="cv-section-title-text">ТГАСУ</span>
+                  <span className="cv-section-description-text text-[#b1b1b1]">
+                    2024 - 2026
+                  </span>
                   <span className="cv-section-description-text">
                     Томский государственный архитектурно-строительный
                     университет, Архитектурный факультет, направление
                     графический дизайн
                   </span>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <div className="flex flex-row gap-2">
-                    <span className="cv-section-accent-title-text">
-                      2025 - 2026
-                    </span>
-                    <span className="cv-section-title-text">[Skillbox]</span>
-                  </div>
+                <div className="flex flex-col gap-2 cv-section-item-background">
+                  <span className="cv-section-title-text">Skillbox</span>
+                  <span className="cv-section-description-text text-[#b1b1b1]">
+                    2025 - 2026
+                  </span>
                   <span className="cv-section-description-text">
                     Курс, UI/UX дизайн
                   </span>
@@ -254,12 +179,11 @@ export const CvSection: FC = () => {
           </AccordionItem>
         </Accordion>
       </div>
-      <div className="flex flex-col gap-12 mb-12">
+      <div className="flex flex-col gap-5 mb-12">
         <p className="cv-section-contacts-title-text text-center">КОНТАКТЫ</p>
         <div className="flex flex-row gap-1 justify-center">
           <Button className="cv-section-contacts-button">Telegram</Button>
           <Button className="cv-section-contacts-button">ВКонтакте</Button>
-          <Button className="cv-section-contacts-button">Почта</Button>
         </div>
       </div>
     </section>
