@@ -1,6 +1,6 @@
-export type THeaderSwitchOptions = "portfolio" | "cv";
+import { type THeaderSwitchOptions } from "./ui/HeaderSwitch/types";
 
-export interface IHeaderSwitchProps {
+export interface IHeaderProps {
   activeSection: THeaderSwitchOptions;
   onSectionChange: (section: THeaderSwitchOptions) => void;
 }

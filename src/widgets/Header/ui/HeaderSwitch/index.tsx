@@ -1,28 +1,29 @@
 import { Button } from "@/shared/ui";
-import { useState, type FC } from "react";
-import type { THeaderSwitchOptions } from "./types";
+import { type FC } from "react";
+import type { IHeaderSwitchProps } from "./types";
 
-export const HeaderSwitch: FC = () => {
-  const [activeSection, setActiveSection] =
-    useState<THeaderSwitchOptions>("portfolio");
-
+export const HeaderSwitch: FC<IHeaderSwitchProps> = ({
+  activeSection,
+  onSectionChange,
+}) => {
   return (
     <div className="header-switch-wrapper">
       <div
         className="header-switch-background"
         data-portfolio-active={activeSection === "portfolio"}
         data-cv-active={activeSection === "cv"}
-      ></div>
+      />
       <Button
         className="header-switch-button"
         data-is-active={activeSection === "portfolio"}
-        onClick={() => setActiveSection("portfolio")}
+        onClick={() => onSectionChange("portfolio")}
       >
         Портфолио
       </Button>
       <Button
         className="header-switch-button"
-        onClick={() => setActiveSection("cv")}
+        data-is-active={activeSection === "cv"}
+        onClick={() => onSectionChange("cv")}
       >
         Резюме
       </Button>
