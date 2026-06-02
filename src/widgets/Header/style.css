@@ -1,5 +1,6 @@
 .header-switch-wrapper {
-  position: relative;
+  display: none;
+  /* position: relative;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -11,7 +12,7 @@
 
   &:hover {
     border-color: var(--color-button-border-hover);
-  }
+  } */
 }
 
 .header-switch-background {
