@@ -7,6 +7,7 @@ import {
 import { CircularProgress } from '@/shared/ui/CircularProgress'
 import type { FC } from 'react'
 import eeImage from '../../assets/images/eeImage.png'
+import CvTitle from '../../assets/svg/cvTitle.svg?react'
 import './style.css'
 
 export const CvSection: FC = () => {
@@ -14,7 +15,7 @@ export const CvSection: FC = () => {
 		<section id='cv' className='cv-section'>
 			<div className='cv-section-title-wrapper'>
 				<img src={eeImage} className='cv-section-ee-image' alt='ee-image' />
-				<p className='cv-section-title'>РЕЗЮМЕ</p>
+				<CvTitle className='cv-section-title' />
 			</div>
 
 			<div className='flex flex-row w-full gap-10'>
@@ -23,7 +24,7 @@ export const CvSection: FC = () => {
 						<AccordionTrigger>
 							<p className='cv-section-title-text'>ОБО МНЕ</p>
 						</AccordionTrigger>
-						<AccordionContent>
+						<AccordionContent className='mt-4'>
 							<div className='flex flex-col gap-10'>
 								<div className='flex flex-col gap-5'>
 									<p className='cv-section-description-text'>
@@ -70,7 +71,7 @@ export const CvSection: FC = () => {
 						<AccordionTrigger>
 							<p className='cv-section-title-text'>НАПРАВЛЕНИЯ</p>
 						</AccordionTrigger>
-						<AccordionContent>
+						<AccordionContent className='mt-4'>
 							<div className='flex flex-col gap-3'>
 								<div className='flex flex-row gap-8 cv-section-item-background'>
 									<div className='flex flex-col'>
@@ -116,7 +117,7 @@ export const CvSection: FC = () => {
 						<AccordionTrigger>
 							<p className='cv-section-title-text'>ПРОГРАММЫ</p>
 						</AccordionTrigger>
-						<AccordionContent>
+						<AccordionContent className='mt-4'>
 							<div className='cv-section-software-wrapper'>
 								<CircularProgress value={90} label='Figma' />
 								<CircularProgress value={80} label='Photoshop' />
@@ -131,7 +132,7 @@ export const CvSection: FC = () => {
 						<AccordionTrigger>
 							<p className='cv-section-title-text'>ОБРАЗОВАНИЕ</p>
 						</AccordionTrigger>
-						<AccordionContent>
+						<AccordionContent className='mt-4'>
 							<div className='flex flex-col gap-3'>
 								<div className='flex flex-col gap-2 cv-section-item-background'>
 									<span className='cv-section-title-text'>ТГАСУ</span>

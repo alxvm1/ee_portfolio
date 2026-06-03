@@ -1,6 +1,6 @@
 .header-switch-wrapper {
-  display: none;
-  /* position: relative;
+	display: none;
+	/* position: relative;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -16,59 +16,65 @@
 }
 
 .header-switch-background {
-  position: absolute;
-  left: 3px;
-  width: calc(50% - 3px);
-  height: calc(100% - 4px);
-  border-radius: 32px;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: var(--color-button-bg);
-  z-index: -10;
-  transition: left 0.3s ease;
+	position: absolute;
+	left: 3px;
+	width: calc(50% - 3px);
+	height: calc(100% - 4px);
+	border-radius: 32px;
+	top: 50%;
+	transform: translateY(-50%);
+	background-color: var(--color-button-bg);
+	z-index: -10;
+	transition: left 0.3s ease;
 }
 
-.header-switch-background[data-cv-active="true"] {
-  left: calc(50%);
+.header-switch-background[data-cv-active='true'] {
+	left: calc(50%);
 }
 
 .header-switch-button {
-  width: auto;
-  min-width: 128px;
-  height: 100%;
-  background-color: transparent;
-  color: white;
-  font-family: var(--font-gothic);
-  font-size: 16px;
+	width: auto;
+	min-width: 128px;
+	height: 100%;
+	background-color: transparent;
+	color: white;
+	font-family: var(--font-gothic);
+	font-size: 16px;
 }
 
 .header-contacts-button-desktop {
-  display: none;
+	display: none;
 }
 
 @media (min-width: 768px) {
-  .header-contacts-button-desktop {
-    display: flex;
-    background-color: transparent;
-    height: 52px;
-    border-radius: 32px;
-    border: 1px solid var(--color-button-border);
-    padding: 13px 19px;
-    font-family: var(--font-gothic);
-    font-size: 16px;
+	.header-contacts-button-desktop {
+		display: flex;
+		background-color: transparent;
+		height: 52px;
+		border-radius: 32px;
+		border: 1px solid var(--color-button-border);
+		padding: 13px 19px;
+		font-family: var(--font-gothic);
+		font-size: 16px;
 
-    &:hover {
-      border-color: var(--color-button-border-hover);
-    }
-  }
+		&:hover {
+			border-color: var(--color-button-border-hover);
+		}
+
+		&:active {
+			border-color: transparent;
+			background-color: white;
+			color: black;
+		}
+	}
 }
 
 .header-contacts-button-mobile {
-  display: block;
+	display: block;
 }
 
 @media (min-width: 768px) {
-  .header-contacts-button-mobile {
-    display: none;
-  }
+	.header-contacts-button-mobile {
+		display: none;
+	}
 }
