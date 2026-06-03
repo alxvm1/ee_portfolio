@@ -6,7 +6,7 @@ import {
 } from '@/shared/ui/Accordion'
 import { CircularProgress } from '@/shared/ui/CircularProgress'
 import type { FC } from 'react'
-import eeImage from '../../assets/images/eeImage.png'
+import eeImage from '../../assets/images/eeImage.webp'
 import CvTitle from '../../assets/svg/cvTitle.svg?react'
 import './style.css'
 
@@ -184,8 +184,20 @@ export const CvSection: FC = () => {
 					КОНТАКТЫ
 				</p>
 				<div className='flex flex-row gap-1 justify-center'>
-					<Button className='cv-section-contacts-button'>Telegram</Button>
-					<Button className='cv-section-contacts-button'>ВКонтакте</Button>
+					<a
+						href='https://t.me/bigkatya'
+						target='_blank'
+						rel='noopener noreferrer'
+					>
+						<Button className='cv-section-contacts-button'>Telegram</Button>
+					</a>
+					<a
+						href='https://vk.com/lil.katya'
+						target='_blank'
+						rel='noopener noreferrer'
+					>
+						<Button className='cv-section-contacts-button'>ВКонтакте</Button>
+					</a>
 				</div>
 			</div>
 		</section>

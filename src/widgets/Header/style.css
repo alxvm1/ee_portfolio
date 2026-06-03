@@ -71,10 +71,28 @@
 
 .header-contacts-button-mobile {
 	display: block;
+	background-color: #161616;
+	border-radius: 100%;
+	padding: 2px;
+	transition: all 0.15s ease;
+
+	&:active {
+		background-color: white;
+		color: black;
+	}
 }
 
 @media (min-width: 768px) {
 	.header-contacts-button-mobile {
 		display: none;
 	}
+}
+
+.header-logo {
+	cursor: pointer;
+	transition: filter 0.5s ease;
+}
+
+.header-logo:hover {
+	filter: drop-shadow(0 0 8px #8bb220);
 }

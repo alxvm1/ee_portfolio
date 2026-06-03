@@ -1,3 +1,4 @@
+import { scrollToBottom, scrollToTop } from '@/shared/lib/scroll'
 import { Button } from '@/shared/ui'
 import ArrowDownIcon from '@shared/assets/svg/common/arrowDownIcon.svg?react'
 import ContactIcon from '@shared/assets/svg/common/contactsIcon.svg?react'
@@ -13,16 +14,23 @@ export const Header: FC<IHeaderProps> = ({
 }) => {
 	return (
 		<header className='fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-[#0c0c0c]'>
-			<LogoIcon />
+			<LogoIcon className='header-logo' onClick={scrollToTop} />
 			<HeaderSwitch
 				activeSection={activeSection}
 				onSectionChange={onSectionChange}
 			/>
-			<Button variant={'outline'} className='header-contacts-button-desktop'>
+			<Button
+				variant={'outline'}
+				className='header-contacts-button-desktop'
+				onClick={scrollToBottom}
+			>
 				Контакты
 				<ArrowDownIcon />
 			</Button>
-			<button className='header-contacts-button-mobile'>
+			<button
+				className='header-contacts-button-mobile'
+				onClick={scrollToBottom}
+			>
 				<ContactIcon />
 			</button>
 		</header>
