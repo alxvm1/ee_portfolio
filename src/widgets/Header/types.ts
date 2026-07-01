@@ -1,6 +1,6 @@
-import { type THeaderSwitchOptions } from "./ui/HeaderSwitch/types";
+import type { THeaderSwitchOptions } from "./ui/HeaderSwitch/types";
 
 export interface IHeaderProps {
-  activeSection: THeaderSwitchOptions;
-  onSectionChange: (section: THeaderSwitchOptions) => void;
+  activeSection?: THeaderSwitchOptions;
+  onSectionChange?: (value: THeaderSwitchOptions) => void;
 }

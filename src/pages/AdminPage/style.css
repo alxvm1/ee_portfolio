@@ -1,0 +1,91 @@
+.admin-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 64px 16px;
+}
+
+.admin-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-bounded);
+}
+
+.admin-panel__title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.admin-panel__tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-panel__tab {
+  border-radius: 9999px;
+  padding: 6px 16px;
+  font-size: 16px;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  background: transparent;
+  font-family: var(--font-bounded);
+  text-transform: uppercase;
+}
+
+.admin-panel__tab:hover:not(.admin-panel__tab--active) {
+  background-color: var(--muted);
+}
+
+.admin-panel__tab--active {
+  background-color: #efefef;
+  color: black;
+}
+
+.admin-panel__create-button {
+  display: flex;
+  justify-content: center;
+  font-family: var(--font-bounded);
+  font-size: 18px;
+  background-color: #efefef;
+  color: black;
+  padding: 24px 8px;
+  border-radius: 40px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #cacaca;
+  }
+
+  &:active {
+    opacity: 0.5;
+  }
+}
+
+.admin-panel__exit-button {
+  display: flex;
+  justify-content: center;
+  font-family: var(--font-bounded);
+  font-size: 12px;
+  background-color: transparent;
+  color: rgb(255, 255, 255);
+  padding: 16px 8px;
+  border-radius: 40px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    opacity: 0.75;
+  }
+
+  &:active {
+    opacity: 0.5;
+  }
+}

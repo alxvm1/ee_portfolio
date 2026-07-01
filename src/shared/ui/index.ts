@@ -16,3 +16,5 @@ export { Textarea } from "./Textarea";
 export { Accordion } from "./Accordion";
 export { CircularProgress } from "./CircularProgress";
 export { Loader } from "./Loader";
+export { Carousel } from "./Carousel";
+export { PdfViewer } from "./PdfViewer";
