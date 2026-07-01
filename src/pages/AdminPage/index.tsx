@@ -1,8 +1,12 @@
-import { LoginForm, signOut, useSession } from "@features/Auth";
+import { authModel, LoginForm } from "@features/Auth";
 import type { TProjectCategory } from "@entities/Project";
+import { adminPageModel } from "./model";
 import { TABS_CONFIG } from "@widgets/ProjectsTabs";
 import { Button } from "@shared/ui";
-import { type FC, useState } from "react";
+import { useUnit } from "effector-react";
+import { type FC, useEffect } from "react";
+import { Link } from "react-router-dom";
+import LogoIcon from "@shared/assets/svg/logoIcon.svg?react";
 import { ProjectsList } from "./ui/ProjectsList";
 import { TextProjectForm } from "./ui/TextProjectForm";
 import { PdfProjectForm } from "./ui/PdfProjectForm";
@@ -14,31 +18,44 @@ const isTextCategory = (
   category === "graphicDesign" || category === "illustrations";
 
 const AdminPanel: FC = () => {
-  const [activeTab, setActiveTab] = useState<TProjectCategory>(
-    TABS_CONFIG[0].value,
-  );
+  const [activeTab, isCreating] = useUnit([
+    adminPageModel.stores.$activeCategory,
+    adminPageModel.stores.$isCreating,
+  ]);
 
-  const [isCreating, setIsCreating] = useState(false);
-  const [listKey, setListKey] = useState(0);
+  const [
+    categoryTabClicked,
+    createFormOpened,
+    adminPageMounted,
+    signOutClicked,
+  ] = useUnit([
+    adminPageModel.events.categoryTabClicked,
+    adminPageModel.events.createFormOpened,
+    adminPageModel.events.adminPageMounted,
+    authModel.events.signOutClicked,
+  ]);
 
-  const handleTabChange = (category: TProjectCategory) => {
-    setActiveTab(category);
-    setIsCreating(false);
-  };
-
-  const handleCreated = () => {
-    setIsCreating(false);
-    setListKey((key) => key + 1);
-  };
+  useEffect(() => {
+    adminPageMounted();
+  }, [adminPageMounted]);
 
   return (
     <div className="admin-panel">
+      <Link
+        to="/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="admin-panel__back-link"
+      >
+        ← На главную
+      </Link>
       <div className="admin-panel__header">
+        <LogoIcon className="header-logo" />
         <h1 className="admin-panel__title">Управление проектами</h1>
         <Button
           className="admin-panel__exit-button"
           variant="outline"
-          onClick={() => signOut()}
+          onClick={signOutClicked}
         >
           Выйти
         </Button>
@@ -49,7 +66,7 @@ const AdminPanel: FC = () => {
           <button
             key={tab.value}
             type="button"
-            onClick={() => handleTabChange(tab.value)}
+            onClick={() => categoryTabClicked(tab.value)}
             className={`admin-panel__tab${activeTab === tab.value ? " admin-panel__tab--active" : ""}`}
           >
             {tab.label}
@@ -60,7 +77,7 @@ const AdminPanel: FC = () => {
       {!isCreating && (
         <Button
           className="admin-panel__create-button"
-          onClick={() => setIsCreating(true)}
+          onClick={createFormOpened}
         >
           + Добавить проект
         </Button>
@@ -68,19 +85,27 @@ const AdminPanel: FC = () => {
 
       {isCreating ? (
         isTextCategory(activeTab) ? (
-          <TextProjectForm category={activeTab} onCreated={handleCreated} />
+          <TextProjectForm />
         ) : (
-          <PdfProjectForm onCreated={handleCreated} />
+          <PdfProjectForm />
         )
       ) : (
-        <ProjectsList key={listKey} category={activeTab} />
+        <ProjectsList category={activeTab} />
       )}
     </div>
   );
 };
 
 export const AdminPage: FC = () => {
-  const { session, isLoading } = useSession();
+  const [session, isLoading] = useUnit([
+    authModel.stores.$session,
+    authModel.stores.$isSessionLoading,
+  ]);
+  const authInitRequested = useUnit(authModel.events.authInitRequested);
+
+  useEffect(() => {
+    authInitRequested();
+  }, [authInitRequested]);
 
   if (isLoading) return null;
 

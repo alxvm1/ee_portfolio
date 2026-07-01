@@ -1,38 +1,29 @@
 import { Button, Input, Label } from "@shared/ui";
-import { type FC, type FormEvent, useState } from "react";
-import { signIn } from "../../api/authApi";
+import { useForm } from "effector-forms";
+import { useUnit } from "effector-react";
+import { type FC } from "react";
+import { authModel } from "../../model";
 import "./style.css";
 
 export const LoginForm: FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-    setError(null);
-    setIsSubmitting(true);
-
-    const result = await signIn(email, password);
-
-    setIsSubmitting(false);
-    if (result.error) setError(result.error);
-  };
+  const { fields, submit } = useForm(authModel.forms.loginForm);
+  const [isSubmitting] = useUnit([authModel.stores.$isSigningIn]);
 
   return (
     <div className="login-form__wrapper">
-      <form onSubmit={handleSubmit} className="login-form">
+      <form onSubmit={(e) => { e.preventDefault(); submit(); }} className="login-form">
         <div className="login-form__field">
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
             type="email"
             className="login-form__input"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
+            value={fields.email.value}
+            onChange={(e) => fields.email.onChange(e.target.value)}
           />
+          {fields.email.firstError && (
+            <p className="login-form__error">{fields.email.firstError.errorText}</p>
+          )}
         </div>
 
         <div className="login-form__field">
@@ -41,13 +32,13 @@ export const LoginForm: FC = () => {
             id="password"
             type="password"
             className="login-form__input"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
+            value={fields.password.value}
+            onChange={(e) => fields.password.onChange(e.target.value)}
           />
+          {fields.password.firstError && (
+            <p className="login-form__error">{fields.password.firstError.errorText}</p>
+          )}
         </div>
-
-        {error && <p className="login-form__error">{error}</p>}
 
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Входим..." : "Войти"}

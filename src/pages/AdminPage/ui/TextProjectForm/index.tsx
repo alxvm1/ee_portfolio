@@ -1,166 +1,138 @@
-import { createProject, uploadProjectAssets } from "@entities/Project";
-import type { TProjectCategory } from "@entities/Project";
+import { projectModel } from "@entities/Project";
 import { Button, Input, Label, Textarea } from "@shared/ui";
-import { type FC, type FormEvent, useRef, useState } from "react";
+import { useForm } from "effector-forms";
+import { useUnit } from "effector-react";
+import { type FC, useRef } from "react";
+import { adminPageModel } from "../../model";
+import "./style.css";
 
-type TTextProjectFormProps = {
-  category: Extract<TProjectCategory, "graphicDesign" | "illustrations">;
-  onCreated: () => void;
-};
-
-export const TextProjectForm: FC<TTextProjectFormProps> = ({
-  category,
-  onCreated,
-}) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [materials, setMaterials] = useState("");
-  const [behanceUrl, setBehanceUrl] = useState("");
-  const [dribbbleUrl, setDribbbleUrl] = useState("");
-  const [imageFiles, setImageFiles] = useState<File[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-    setError(null);
-
-    if (imageFiles.length === 0) {
-      setError("Выберите хотя бы одно изображение — первое станет обложкой");
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    const uploadResult = await uploadProjectAssets(imageFiles, category);
-
-    if (uploadResult.error || uploadResult.urls.length === 0) {
-      setIsSubmitting(false);
-      setError(uploadResult.error ?? "Не удалось загрузить изображения");
-      return;
-    }
-
-    const [thumbnailUrl, ...restUrls] = uploadResult.urls;
-
-    const result = await createProject(category, {
-      title,
-      description,
-      materials: materials || null,
-      behance_url: behanceUrl || null,
-      dribbble_url: dribbbleUrl || null,
-      thumbnail_url: thumbnailUrl,
-      images: [thumbnailUrl, ...restUrls],
-    });
-
-    setIsSubmitting(false);
-
-    if (result.error) {
-      setError(result.error);
-      return;
-    }
-
-    setTitle("");
-    setDescription("");
-    setMaterials("");
-    setBehanceUrl("");
-    setDribbbleUrl("");
-    setImageFiles([]);
-    onCreated();
-  };
+export const TextProjectForm: FC = () => {
+  const { fields, submit } = useForm(adminPageModel.forms.textProjectForm);
+  const [isSubmitting] = useUnit([projectModel.stores.$isFormSubmitting]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <div className="flex flex-col gap-1.5">
-        <Label htmlFor="images">Изображения</Label>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        submit();
+      }}
+      className="text-form"
+    >
+      <div className="text-form__field">
+        <Label>Изображения</Label>
         <input
           ref={fileInputRef}
           type="file"
           accept="image/*"
           multiple
-          onChange={(e) => setImageFiles(Array.from(e.target.files ?? []))}
-          className="hidden"
+          onChange={(e) =>
+            fields.imageFiles.onChange(Array.from(e.target.files ?? []))
+          }
+          className="text-form__file-input"
         />
         <Button
           type="button"
           variant="outline"
           onClick={() => fileInputRef.current?.click()}
+          className="font-gothic"
         >
-          {imageFiles.length > 0
-            ? `Выбрано файлов: ${imageFiles.length}`
+          {fields.imageFiles.value.length > 0
+            ? `Выбрано файлов: ${fields.imageFiles.value.length}`
             : "Выбрать изображения"}
         </Button>
-        {imageFiles.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {imageFiles.map((file, index) => (
-              <div key={`${file.name}-${index}`} className="relative">
+        {fields.imageFiles.value.length > 0 && (
+          <div className="text-form__previews">
+            {fields.imageFiles.value.map((file, index) => (
+              <div
+                key={`${file.name}-${index}`}
+                className="text-form__preview-item"
+              >
                 <img
                   src={URL.createObjectURL(file)}
                   alt=""
-                  className="h-20 w-20 rounded-md object-cover"
+                  className="text-form__preview-img"
                 />
                 {index === 0 && (
-                  <span className="absolute -top-2 -right-2 rounded-full bg-primary px-1.5 py-0.5 text-[10px] text-primary-foreground">
-                    Обложка
-                  </span>
+                  <span className="text-form__cover-badge">Обложка</span>
                 )}
               </div>
             ))}
           </div>
         )}
+        {fields.imageFiles.firstError && (
+          <p className="text-form__error">
+            {fields.imageFiles.firstError.errorText}
+          </p>
+        )}
       </div>
 
-      <div className="flex flex-col gap-1.5">
+      <div className="text-form__field">
         <Label htmlFor="title">Название</Label>
         <Input
           id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
+          value={fields.title.value}
+          onChange={(e) => fields.title.onChange(e.target.value)}
+          placeholder="Название проекта"
         />
+        {fields.title.firstError && (
+          <p className="text-form__error">
+            {fields.title.firstError.errorText}
+          </p>
+        )}
       </div>
 
-      <div className="flex flex-col gap-1.5">
+      <div className="text-form__field">
         <Label htmlFor="description">Описание</Label>
         <Textarea
           id="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
+          value={fields.description.value}
+          onChange={(e) => fields.description.onChange(e.target.value)}
+          placeholder="Описание проекта"
         />
+        {fields.description.firstError && (
+          <p className="text-form__error">
+            {fields.description.firstError.errorText}
+          </p>
+        )}
       </div>
 
-      <div className="flex flex-col gap-1.5">
+      <div className="text-form__field">
         <Label htmlFor="materials">Материалы</Label>
         <Input
           id="materials"
-          value={materials}
-          onChange={(e) => setMaterials(e.target.value)}
+          value={fields.materials.value}
+          onChange={(e) => fields.materials.onChange(e.target.value)}
+          placeholder="Материалы проекта"
         />
       </div>
 
-      <div className="flex flex-col gap-1.5">
+      <div className="text-form__field">
         <Label htmlFor="behance">Ссылка на Behance</Label>
         <Input
           id="behance"
-          value={behanceUrl}
-          onChange={(e) => setBehanceUrl(e.target.value)}
+          value={fields.behanceUrl.value}
+          onChange={(e) => fields.behanceUrl.onChange(e.target.value)}
+          placeholder="https://www.behance.net/..."
         />
       </div>
 
-      <div className="flex flex-col gap-1.5">
+      <div className="text-form__field">
         <Label htmlFor="dribbble">Ссылка на Dribbble</Label>
         <Input
           id="dribbble"
-          value={dribbbleUrl}
-          onChange={(e) => setDribbbleUrl(e.target.value)}
+          value={fields.dribbbleUrl.value}
+          onChange={(e) => fields.dribbbleUrl.onChange(e.target.value)}
+          placeholder="https://dribbble.com/..."
         />
       </div>
 
-      {error && <p className="text-destructive text-sm">{error}</p>}
-
-      <Button type="submit" disabled={isSubmitting}>
+      <Button
+        type="submit"
+        disabled={isSubmitting}
+        className="text-form__submit-button"
+      >
         {isSubmitting ? "Сохраняем..." : "Создать проект"}
       </Button>
     </form>

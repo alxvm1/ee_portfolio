@@ -47,6 +47,10 @@
   color: var(--foreground);
 }
 
+.projects-list__card {
+  box-shadow: 4px 4px 14px 2px rgba(0, 0, 0, 0.5);
+}
+
 .projects-list__controls {
   display: flex;
   align-items: center;

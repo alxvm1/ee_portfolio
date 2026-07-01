@@ -1,0 +1,35 @@
+.pdf-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pdf-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pdf-form__preview {
+  height: 96px;
+  width: 96px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.pdf-form__error {
+  font-size: 0.875rem;
+  color: var(--destructive);
+}
+
+.pdf-form__file-input {
+  display: none;
+}
+
+.pdf-form__submit-button {
+  font-family: var(--font-bounded);
+  font-size: 18px;
+  padding: 24px 24px;
+  text-transform: uppercase;
+  margin-top: 14px;
+}

@@ -1,9 +1,10 @@
 import {
-  useAdminProjectsList,
+  projectModel,
   type TAnyProject,
   type TProjectCategory,
 } from "@entities/Project";
 import { Badge, Button, Card, CardContent } from "@shared/ui";
+import { useUnit } from "effector-react";
 import { type FC } from "react";
 import EyeIcon from "@shared/assets/svg/common/eyeIcon.svg?react";
 import ClosedEyeIcon from "@shared/assets/svg/common/closedEyeIcon.svg?react";
@@ -13,22 +14,23 @@ type TProjectsListProps = {
   category: TProjectCategory;
 };
 
-const getProjectLabel = (project: TAnyProject) =>
-  "title" in project ? project.title : `Проект ${project.id.slice(0, 8)}`;
-
 export const ProjectsList: FC<TProjectsListProps> = ({ category }) => {
-  const {
-    data: projects,
-    isLoading,
-    error,
-    moveProject,
-    deleteProjectItem,
-    togglePublish,
-  } = useAdminProjectsList(category);
+  const [projects, isLoading, error] = useUnit([
+    projectModel.stores.$projects,
+    projectModel.stores.$isAdminProjectsLoading,
+    projectModel.stores.$projectsError,
+  ]);
+
+  const [projectDeleteClicked, projectPublishToggled, projectMoveClicked] =
+    useUnit([
+      projectModel.events.projectDeleteClicked,
+      projectModel.events.projectPublishToggled,
+      projectModel.events.projectMoveClicked,
+    ]);
 
   const handleDelete = (project: TAnyProject) => {
-    if (!confirm(`Удалить "${getProjectLabel(project)}"?`)) return;
-    deleteProjectItem(project.id);
+    if (!confirm(`Удалить "${project.title}"?`)) return;
+    projectDeleteClicked({ category, id: project.id });
   };
 
   return (
@@ -41,7 +43,7 @@ export const ProjectsList: FC<TProjectsListProps> = ({ category }) => {
       {!isLoading &&
         !error &&
         projects.map((project, index) => (
-          <Card key={project.id} className="w-full">
+          <Card key={project.id} className="w-full projects-list__card">
             <CardContent className="projects-list__item">
               <div className="projects-list__item-info">
                 <img
@@ -51,7 +53,7 @@ export const ProjectsList: FC<TProjectsListProps> = ({ category }) => {
                 />
                 <div className="projects-list__item-meta">
                   <span className="projects-list__item-title">
-                    {getProjectLabel(project)}
+                    {project.title}
                   </span>
                   {!project.is_published && (
                     <Badge variant="outline">скрыт</Badge>
@@ -65,7 +67,11 @@ export const ProjectsList: FC<TProjectsListProps> = ({ category }) => {
                   size="sm"
                   variant="outline"
                   onClick={() =>
-                    togglePublish(project.id, project.is_published)
+                    projectPublishToggled({
+                      category,
+                      id: project.id,
+                      isPublished: !project.is_published,
+                    })
                   }
                   aria-label={
                     project.is_published ? "Скрыть проект" : "Показать проект"
@@ -82,7 +88,9 @@ export const ProjectsList: FC<TProjectsListProps> = ({ category }) => {
                   size="sm"
                   variant="outline"
                   disabled={index === 0}
-                  onClick={() => moveProject(index, "up")}
+                  onClick={() =>
+                    projectMoveClicked({ category, index, direction: "up" })
+                  }
                 >
                   ↑
                 </Button>
@@ -91,7 +99,9 @@ export const ProjectsList: FC<TProjectsListProps> = ({ category }) => {
                   size="sm"
                   variant="outline"
                   disabled={index === projects.length - 1}
-                  onClick={() => moveProject(index, "down")}
+                  onClick={() =>
+                    projectMoveClicked({ category, index, direction: "down" })
+                  }
                 >
                   ↓
                 </Button>

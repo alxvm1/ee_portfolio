@@ -1,4 +1,5 @@
-import { useProjectDetail, type TProjectCategory } from "@entities/Project";
+import { projectModel, type TProjectCategory } from "@entities/Project";
+import { useUnit } from "effector-react";
 import { useEffect, useState, type FC } from "react";
 import "./style.css";
 import { Carousel, PdfViewer } from "@/shared/ui";
@@ -31,7 +32,16 @@ export const ProjectDetailContent: FC<TProjectDetailContentProps> = ({
   onBack,
   ...props
 }) => {
-  const { data: project, isLoading, error } = useProjectDetail(category, id);
+  const [project, isLoading, error, projectDetailRequested] = useUnit([
+    projectModel.stores.$projectDetail,
+    projectModel.stores.$isProjectDetailLoading,
+    projectModel.stores.$projectDetailError,
+    projectModel.events.projectDetailRequested,
+  ]);
+
+  useEffect(() => {
+    projectDetailRequested({ category, id });
+  }, [category, id, projectDetailRequested]);
 
   return (
     <div
@@ -52,7 +62,7 @@ export const ProjectDetailContent: FC<TProjectDetailContentProps> = ({
           />
         ) : (
           <div className="project-detail-content__body">
-            {"title" in project && (
+            {"description" in project && (
               <div className="project-detail-content__text">
                 <div className="flex flex-col gap-5">
                   <h2 className="project-detail-content__title">

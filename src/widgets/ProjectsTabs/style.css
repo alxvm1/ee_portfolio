@@ -1,31 +1,31 @@
 .projects-tabs {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 12px;
-	height: 75px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  height: 75px;
 }
 
 .projects-tabs__item {
-	height: 57px;
-	padding: 16px 28px;
-	border-radius: 32px;
-	border: 1px solid rgba(255, 255, 255, 0.25);
-	background: transparent;
-	color: #ffffff;
-	font-family: var(--font-bounded);
-	font-size: 20px;
-	white-space: nowrap;
-	text-transform: uppercase;
-	cursor: pointer;
-	transition: all 0.2s ease-in;
+  height: 57px;
+  padding: 16px 28px;
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  color: #ffffff;
+  font-family: var(--font-bounded);
+  font-size: 20px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
 }
 
 .projects-tabs__item--active {
-	background: #efefef;
-	color: #111111;
-	border-color: #efefef;
-	border-bottom-left-radius: 0;
-	border-bottom-right-radius: 0;
-	height: 100%;
-	padding-top: 2px;
+  background: #efefef;
+  color: #111111;
+  border-color: #efefef;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  height: 100%;
+  padding-top: 2px;
 }

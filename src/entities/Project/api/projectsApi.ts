@@ -1,9 +1,6 @@
 import { supabase } from "@shared/lib/supabase";
-import {
-  CATEGORY_TABLE,
-  type TAnyProject,
-  type TProjectCategory,
-} from "../model/types";
+import { CATEGORY_TABLE } from "../config";
+import type { TAnyProject, TProjectCategory } from "../types";
 
 export const fetchPublishedProjects = async (
   category: TProjectCategory,
