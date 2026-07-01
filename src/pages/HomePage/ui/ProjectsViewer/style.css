@@ -1,0 +1,34 @@
+.projects-viewer__wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.projects-viewer__nav {
+  display: flex;
+}
+
+.projects-viewer__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  gap: 20px;
+  padding: 40px;
+  background-color: #efefef;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+}
+
+.projects-viewer__item {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 4px;
+}
+
+.projects-viewer__thumb {
+  border-radius: 4px;
+}
+
+.projects-viewer__grid[data-square-left-corner="true"] {
+  border-top-left-radius: 0;
+}
