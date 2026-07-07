@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 .vercel
 .env*
+
+# Local Claude Code project instructions - not for public repo
+CLAUDE.md
+supabase/.branches
+supabase/.temp
