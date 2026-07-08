@@ -6,17 +6,18 @@ import {
   updateProjectSortOrderFx,
   updateProjectStatusFx,
 } from "./mutations";
-import { pdfProjectCreated, textProjectCreated } from "./submit";
-import type { TProjectCategory } from "../types";
+import { projectCreated } from "./submit";
 
-// после любой мутации — рефетч списка
 sample({
-  clock: [deleteProjectFx.done, updateProjectStatusFx.done, updateProjectSortOrderFx.done],
+  clock: [
+    deleteProjectFx.done,
+    updateProjectStatusFx.done,
+    updateProjectSortOrderFx.done,
+  ],
   fn: ({ params }) => ({ category: params.category }),
   target: adminProjectsRequested,
 });
 
-// перемещение — вычислить пары и запустить эффект (нужен $projects из list.ts)
 sample({
   clock: projectMoveClicked,
   source: $projects,
@@ -35,15 +36,8 @@ sample({
   target: updateProjectSortOrderFx,
 });
 
-// после создания проекта — рефетч списка
 sample({
-  clock: pdfProjectCreated,
-  fn: () => ({ category: "uiDesign" as TProjectCategory }),
-  target: adminProjectsRequested,
-});
-
-sample({
-  clock: textProjectCreated,
+  clock: projectCreated,
   fn: ({ category }) => ({ category }),
   target: adminProjectsRequested,
 });

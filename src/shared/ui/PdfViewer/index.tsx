@@ -1,60 +1,77 @@
-import { cn } from "@shared/lib/utils";
-import { type FC, useEffect, useRef, useState } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
-import "react-pdf/dist/Page/AnnotationLayer.css";
-import "react-pdf/dist/Page/TextLayer.css";
+import { useElementWidth } from '@shared/lib/useElementWidth'
+import { cn } from '@shared/lib/utils'
+import { type FC, useRef, useState } from 'react'
+import { Document, Page, pdfjs } from 'react-pdf'
+import 'react-pdf/dist/Page/AnnotationLayer.css'
+import 'react-pdf/dist/Page/TextLayer.css'
+import type { TPdfViewerProps } from './types'
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
-  import.meta.url,
-).toString();
+	'pdfjs-dist/build/pdf.worker.min.mjs',
+	import.meta.url
+).toString()
 
-type TPdfViewerProps = {
-  fileUrl: string;
-  className?: string;
-};
+export const PdfViewer: FC<TPdfViewerProps> = ({
+	fileUrl,
+	className,
+	onLoading,
+	onError,
+}) => {
+	const { ref: containerRef, width: containerWidth } =
+		useElementWidth<HTMLDivElement>()
+	const [numPages, setNumPages] = useState<number | null>(null)
+	const renderedCountRef = useRef(0)
 
-export const PdfViewer: FC<TPdfViewerProps> = ({ fileUrl, className }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [containerWidth, setContainerWidth] = useState<number>();
-  const [numPages, setNumPages] = useState<number | null>(null);
+	const handleDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
+		onLoading?.(true)
+		renderedCountRef.current = 0
+		setNumPages(numPages)
+	}
 
-  useEffect(() => {
-    const node = containerRef.current;
-    if (!node) return;
+	const handlePageRendered = (total: number) => {
+		renderedCountRef.current += 1
+		if (renderedCountRef.current >= total) {
+			requestAnimationFrame(() => {
+				requestAnimationFrame(() => {
+					onLoading?.(false)
+				})
+			})
+		}
+	}
 
-    const updateWidth = () => setContainerWidth(node.offsetWidth);
-    updateWidth();
-
-    const observer = new ResizeObserver(updateWidth);
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={containerRef}
-      className={cn(
-        "mx-auto flex w-full flex-col items-center gap-4",
-        className,
-      )}
-    >
-      <Document
-        file={fileUrl}
-        onLoadSuccess={({ numPages }) => setNumPages(numPages)}
-        loading={<p className="text-muted-foreground">Загрузка PDF...</p>}
-        error={<p className="text-destructive">Не удалось загрузить PDF.</p>}
-      >
-        {Array.from({ length: numPages ?? 0 }, (_, index) => (
-          <Page
-            key={index}
-            pageNumber={index + 1}
-            width={containerWidth}
-            className="overflow-hidden rounded-xl shadow-[0_0_12px_4px_rgba(0,0,0,0.12)] [&:not(:last-child)]:mb-4"
-          />
-        ))}
-      </Document>
-    </div>
-  );
-};
+	return (
+		<div
+			ref={containerRef}
+			className={cn(
+				'mx-auto flex w-full flex-col items-center gap-4',
+				className
+			)}
+		>
+			<Document
+				file={fileUrl}
+				onLoadSuccess={handleDocumentLoadSuccess}
+				onLoadError={error => {
+					onLoading?.(false)
+					onError?.(error)
+				}}
+				loading={<p className='text-muted-foreground'>Загрузка PDF...</p>}
+				error={<p className='text-destructive'>Не удалось загрузить PDF.</p>}
+			>
+				{Array.from({ length: numPages ?? 0 }, (_, index) => (
+					<Page
+						key={index}
+						pageNumber={index + 1}
+						width={containerWidth}
+						devicePixelRatio={Math.min(2, window.devicePixelRatio || 1)}
+						canvasBackground='#efefef'
+						className='overflow-hidden rounded-xl [&:not(:last-child)]:mb-4'
+						renderTextLayer={false}
+						renderAnnotationLayer={false}
+						onRenderSuccess={() => handlePageRendered(numPages ?? 0)}
+						onRenderError={() => handlePageRendered(numPages ?? 0)}
+					/>
+				))}
+			</Document>
+		</div>
+	)
+}

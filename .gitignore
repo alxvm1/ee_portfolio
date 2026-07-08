@@ -29,3 +29,6 @@ dist-ssr
 CLAUDE.md
 supabase/.branches
 supabase/.temp
+
+#TO BE REMOVED
+/public/*.html

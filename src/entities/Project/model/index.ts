@@ -22,15 +22,12 @@ import {
 } from "./mutations";
 import {
   $isFormSubmitting,
-  pdfProjectCreateFailed,
-  pdfProjectCreated,
-  pdfProjectSubmitted,
-  textProjectCreateFailed,
-  textProjectCreated,
-  textProjectSubmitted,
+  projectCreateFailed,
+  projectCreated,
+  projectSubmitted,
 } from "./submit";
 
-export type { TPdfProjectSubmitPayload, TTextProjectSubmitPayload } from "./submit";
+export type { TProjectSubmitPayload } from "./submit";
 
 export const projectModel = {
   events: {
@@ -40,12 +37,9 @@ export const projectModel = {
     projectDeleteClicked,
     projectPublishToggled,
     projectMoveClicked,
-    pdfProjectSubmitted,
-    textProjectSubmitted,
-    pdfProjectCreated,
-    textProjectCreated,
-    pdfProjectCreateFailed,
-    textProjectCreateFailed,
+    projectSubmitted,
+    projectCreated,
+    projectCreateFailed,
   },
   stores: {
     $projects,

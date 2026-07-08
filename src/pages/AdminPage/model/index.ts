@@ -1,6 +1,6 @@
 import "./actions";
 
-import { pdfForm, textProjectForm } from "./forms";
+import { projectForm } from "./forms";
 import {
   $activeCategory,
   $isCreating,
@@ -11,18 +11,12 @@ import {
 } from "./ui";
 
 export const adminPageModel = {
-  forms: {
-    pdfForm,
-    textProjectForm,
-  },
+  forms: { projectForm },
   events: {
     adminPageMounted,
     categoryTabClicked,
     createFormOpened,
     createFormClosed,
   },
-  stores: {
-    $activeCategory,
-    $isCreating,
-  },
+  stores: { $activeCategory, $isCreating },
 };

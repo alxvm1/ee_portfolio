@@ -11,7 +11,14 @@ export const ProjectsTabs: FC<TProjectsTabsProps> = ({ active, onChange }) => {
         <button
           key={tab.value}
           type="button"
-          onClick={() => onChange(tab.value)}
+          onClick={(event) => {
+            onChange(tab.value);
+            event.currentTarget.scrollIntoView({
+              behavior: "smooth",
+              inline: "center",
+              block: "nearest",
+            });
+          }}
           className={cn(
             "projects-tabs__item",
             active === tab.value && "projects-tabs__item--active",

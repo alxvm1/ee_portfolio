@@ -1,5 +1,4 @@
 import { authModel, LoginForm } from "@features/Auth";
-import type { TProjectCategory } from "@entities/Project";
 import { adminPageModel } from "./model";
 import { TABS_CONFIG } from "@widgets/ProjectsTabs";
 import { Button } from "@shared/ui";
@@ -8,14 +7,8 @@ import { type FC, useEffect } from "react";
 import { Link } from "react-router-dom";
 import LogoIcon from "@shared/assets/svg/logoIcon.svg?react";
 import { ProjectsList } from "./ui/ProjectsList";
-import { TextProjectForm } from "./ui/TextProjectForm";
-import { PdfProjectForm } from "./ui/PdfProjectForm";
+import { AddProjectForm } from "./ui/AddProjectForm";
 import "./style.css";
-
-const isTextCategory = (
-  category: TProjectCategory,
-): category is "graphicDesign" | "illustrations" =>
-  category === "graphicDesign" || category === "illustrations";
 
 const AdminPanel: FC = () => {
   const [activeTab, isCreating] = useUnit([
@@ -83,15 +76,7 @@ const AdminPanel: FC = () => {
         </Button>
       )}
 
-      {isCreating ? (
-        isTextCategory(activeTab) ? (
-          <TextProjectForm />
-        ) : (
-          <PdfProjectForm />
-        )
-      ) : (
-        <ProjectsList category={activeTab} />
-      )}
+      {isCreating ? <AddProjectForm /> : <ProjectsList category={activeTab} />}
     </div>
   );
 };

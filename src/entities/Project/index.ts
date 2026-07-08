@@ -1,8 +1,6 @@
 export type {
   IBaseProject,
-  IUiDesignProject,
-  IGraphicDesignProject,
-  IIllustrationProject,
+  IProject,
   TAnyProject,
   TProjectCategory,
 } from "./types";

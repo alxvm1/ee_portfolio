@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+
+Sitemap: https://ee-portfolio-gray.vercel.app/sitemap.xml

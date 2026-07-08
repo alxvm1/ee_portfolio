@@ -1,97 +1,134 @@
-.header-switch-wrapper {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  height: 52px;
-  border-radius: 32px;
-  border: 1px solid var(--color-button-border);
-  padding: 4px;
-  transition: all 0.3s ease;
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 50;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: #0c0c0c;
+	padding: 20px 52px;
 
-  &:hover {
-    border-color: var(--color-button-border-hover);
-  }
+	@media (max-width: 768px) {
+		padding: 20px 12px;
+	}
+}
+
+.header-switch-wrapper {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	height: 52px;
+	border-radius: 32px;
+	border: 1px solid var(--color-button-border);
+	padding: 4px;
+	transition: all 0.3s ease;
+
+	@media (hover: hover) {
+		&:hover {
+			border-color: var(--color-button-border-hover);
+		}
+	}
 }
 
 .header-switch-background {
-  position: absolute;
-  left: 3px;
-  width: calc(50% - 3px);
-  height: calc(100% - 4px);
-  border-radius: 32px;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: var(--color-button-bg);
-  z-index: -10;
-  transition: left 0.3s ease;
+	position: absolute;
+	left: 3px;
+	width: calc(50% - 3px);
+	height: calc(100% - 4px);
+	border-radius: 32px;
+	top: 50%;
+	transform: translateY(-50%);
+	background-color: var(--color-button-bg);
+	z-index: -10;
+	transition: left 0.3s ease;
 }
 
-.header-switch-background[data-cv-active="true"] {
-  left: calc(50%);
+.header-switch-background[data-cv-active='true'] {
+	left: calc(50%);
 }
 
 .header-switch-button {
-  width: auto;
-  min-width: 128px;
-  height: 100%;
-  background-color: transparent;
-  color: white;
-  font-family: var(--font-gothic);
-  font-size: 16px;
+	width: auto;
+	min-width: 128px;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: transparent;
+	color: white;
+	font-family: var(--font-gothic);
+	font-size: 16px;
+
+	&[data-is-active='false'] {
+		color: #6b6b6b;
+	}
+
+	@media (max-width: 768px) {
+		font-size: 14px;
+		max-height: 41px;
+		min-width: 116px;
+		padding: 0 4px;
+	}
 }
 
 .header-contacts-button-desktop {
-  display: none;
+	display: none;
 }
 
 @media (min-width: 768px) {
-  .header-contacts-button-desktop {
-    display: flex;
-    background-color: transparent;
-    height: 52px;
-    border-radius: 32px;
-    border: 1px solid var(--color-button-border);
-    padding: 13px 19px;
-    font-family: var(--font-gothic);
-    font-size: 16px;
+	.header-contacts-button-desktop {
+		display: flex;
+		background-color: transparent;
+		height: 52px;
+		border-radius: 32px;
+		border: 1px solid var(--color-button-border);
+		padding: 13px 19px;
+		font-family: var(--font-gothic);
+		font-size: 16px;
+		transition: all 0.3s ease;
 
-    &:hover {
-      border-color: var(--color-button-border-hover);
-    }
+		@media (hover: hover) {
+			&:hover {
+				border-color: var(--color-button-border-hover);
+			}
+		}
 
-    &:active {
-      border-color: transparent;
-      background-color: white;
-      color: black;
-    }
-  }
+		&:active {
+			border-color: var(--color-button-border-hover);
+			box-shadow: inset 0 0 4px 0 var(--color-button-border-hover);
+		}
+	}
 }
 
 .header-contacts-button-mobile {
-  display: block;
-  background-color: #161616;
-  border-radius: 100%;
-  padding: 2px;
-  transition: all 0.15s ease;
+	display: block;
+	background-color: #161616;
+	border-radius: 100%;
+	padding: 2px;
+	transition: all 0.15s ease;
 
-  &:active {
-    background-color: white;
-    color: black;
-  }
+	&:active {
+		background-color: white;
+		color: black;
+	}
 }
 
 @media (min-width: 768px) {
-  .header-contacts-button-mobile {
-    display: none;
-  }
+	.header-contacts-button-mobile {
+		display: none;
+	}
 }
 
 .header-logo {
-  cursor: pointer;
-  transition: filter 0.5s ease;
+	cursor: pointer;
+	transition: filter 0.5s ease;
 }
 
-.header-logo:hover {
-  filter: drop-shadow(0 0 8px #8bb220);
+@media (hover: hover) {
+	.header-logo:hover {
+		filter: drop-shadow(0 0 8px #8bb220);
+	}
 }

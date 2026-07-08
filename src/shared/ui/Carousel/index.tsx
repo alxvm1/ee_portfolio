@@ -41,7 +41,7 @@ export const Carousel: FC<TCarouselProps> = ({ images, className }) => {
             <div key={src} className="min-w-0 flex-[0_0_100%]">
               <img
                 src={src}
-                alt=""
+                alt="Изображение из галереи проекта"
                 className="block h-auto w-full object-cover"
               />
             </div>

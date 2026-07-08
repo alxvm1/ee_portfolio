@@ -1,121 +1,121 @@
-import { projectModel, type TProjectCategory } from "@entities/Project";
-import { useUnit } from "effector-react";
-import { useEffect, useState, type FC } from "react";
-import "./style.css";
-import { Carousel, PdfViewer } from "@/shared/ui";
+import { PdfViewer, Spinner } from '@/shared/ui'
+import { projectModel } from '@entities/Project'
+import ChevronIcon from '@shared/assets/svg/common/chevronIcon.svg?react'
+import { useUnit } from 'effector-react'
+import { useEffect, useRef, useState, type FC } from 'react'
+import './style.css'
+import type { TDetailStatus, TProjectDetailContentProps } from './types'
 
-const UiDesignDetail: FC<{ mobilePdfUrl: string; desktopPdfUrl: string }> = ({
-  mobilePdfUrl,
-  desktopPdfUrl,
-}) => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  return <PdfViewer fileUrl={isMobile ? mobilePdfUrl : desktopPdfUrl} />;
-};
-
-type TProjectDetailContentProps = {
-  category: TProjectCategory;
-  id: string;
-  onBack: () => void;
-  "data-square-left-corner"?: boolean;
-};
+const getDetailStatus = (
+	isProjectLoading: boolean,
+	projectError: string | null,
+	isPdfLoading: boolean,
+	pdfError: Error | null
+): TDetailStatus => {
+	if (projectError || pdfError) return 'error'
+	if (isProjectLoading || isPdfLoading) return 'loading'
+	return 'ready'
+}
 
 export const ProjectDetailContent: FC<TProjectDetailContentProps> = ({
-  category,
-  id,
-  onBack,
-  ...props
+	category,
+	id,
+	onBack,
+	isSquareLeftCorner,
+	isSquareRightCorner,
 }) => {
-  const [project, isLoading, error, projectDetailRequested] = useUnit([
-    projectModel.stores.$projectDetail,
-    projectModel.stores.$isProjectDetailLoading,
-    projectModel.stores.$projectDetailError,
-    projectModel.events.projectDetailRequested,
-  ]);
+	const [project, isProjectLoading, projectError, projectDetailRequested] =
+		useUnit([
+			projectModel.stores.$projectDetail,
+			projectModel.stores.$isProjectDetailLoading,
+			projectModel.stores.$projectDetailError,
+			projectModel.events.projectDetailRequested,
+		])
 
-  useEffect(() => {
-    projectDetailRequested({ category, id });
-  }, [category, id, projectDetailRequested]);
+	const [isPdfLoading, setIsPdfLoading] = useState(true)
+	const [pdfError, setPdfError] = useState<Error | null>(null)
+	const [isReturnBtnVisible, setIsReturnBtnVisible] = useState(true)
+	const returnBtnRef = useRef<HTMLButtonElement>(null)
+	const containerRef = useRef<HTMLDivElement>(null)
 
-  return (
-    <div
-      className="project-detail-content"
-      data-square-left-corner={props["data-square-left-corner"]}
-    >
-      {isLoading && <p className="text-muted-foreground">Загрузка...</p>}
-      {!isLoading && error && (
-        <p className="text-destructive">Не удалось загрузить проект: {error}</p>
-      )}
-      {!isLoading &&
-        !error &&
-        project &&
-        (category === "uiDesign" && "mobile_pdf_url" in project ? (
-          <UiDesignDetail
-            mobilePdfUrl={project.mobile_pdf_url}
-            desktopPdfUrl={project.desktop_pdf_url}
-          />
-        ) : (
-          <div className="project-detail-content__body">
-            {"description" in project && (
-              <div className="project-detail-content__text">
-                <div className="flex flex-col gap-5">
-                  <h2 className="project-detail-content__title">
-                    {project.title}
-                  </h2>
-                  <p className="project-detail-content__description">
-                    {project.description}
-                  </p>
-                </div>
+	const status = getDetailStatus(
+		isProjectLoading,
+		projectError,
+		isPdfLoading,
+		pdfError
+	)
 
-                {project.materials && (
-                  <div>
-                    <p className="project-detail-content__materials-title">
-                      Материалы:
-                    </p>
-                    <p className="project-detail-content__materials-description">
-                      {project.materials}
-                    </p>
-                  </div>
-                )}
+	useEffect(() => {
+		projectDetailRequested({ category, id })
+	}, [category, id, projectDetailRequested])
 
-                <div className="project-detail-content__links">
-                  {project.behance_url && (
-                    <a
-                      href={project.behance_url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="project-detail-content__link"
-                    >
-                      Behance
-                    </a>
-                  )}
-                  {project.dribbble_url && (
-                    <a
-                      href={project.dribbble_url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="project-detail-content__link"
-                    >
-                      Dribbble
-                    </a>
-                  )}
-                </div>
-              </div>
-            )}
-            {"images" in project && project.images.length > 0 && (
-              <Carousel
-                images={project.images}
-                className="project-detail-content__images"
-              />
-            )}
-          </div>
-        ))}
-    </div>
-  );
-};
+	useEffect(() => {
+		const node = returnBtnRef.current
+		if (!node) return
+
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				const isScrolledPastBelow =
+					!entry.isIntersecting && entry.boundingClientRect.top < 0
+				setIsReturnBtnVisible(!isScrolledPastBelow)
+			},
+			{ threshold: 0 }
+		)
+		observer.observe(node)
+
+		return () => observer.disconnect()
+	}, [status])
+
+	const scrollToTop = () => {
+		containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+	}
+
+	return (
+		<div
+			ref={containerRef}
+			className='project-detail-content'
+			data-square-left-corner={isSquareLeftCorner}
+			data-square-right-corner={isSquareRightCorner}
+		>
+			{status === 'ready' && (
+				<button
+					ref={returnBtnRef}
+					className='project-detail-content__return-btn'
+					onClick={onBack}
+				>
+					<ChevronIcon className='project-detail-content__return-btn__icon' />
+				</button>
+			)}
+			{status === 'ready' && !isReturnBtnVisible && (
+				<button
+					type='button'
+					className='project-detail-content__scroll-top-btn'
+					onClick={scrollToTop}
+					aria-label='Прокрутить к началу документа'
+				>
+					<ChevronIcon className='project-detail-content__scroll-top-btn__icon' />
+				</button>
+			)}
+
+			<div className='project-detail-content__viewer'>
+				{status === 'loading' && <Spinner />}
+				{status === 'error' && (
+					<p className='text-destructive'>
+						{projectError
+							? `Не удалось загрузить проект: ${projectError}`
+							: 'Не удалось загрузить PDF.'}
+					</p>
+				)}
+
+				{project && (
+					<PdfViewer
+						className={status !== 'ready' ? 'invisible absolute' : undefined}
+						fileUrl={project.pdf_url}
+						onLoading={setIsPdfLoading}
+						onError={setPdfError}
+					/>
+				)}
+			</div>
+		</div>
+	)
+}

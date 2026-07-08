@@ -13,7 +13,7 @@ export const Header: FC<IHeaderProps> = ({
   onSectionChange,
 }) => {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-[#0c0c0c]">
+    <header className="header">
       <LogoIcon className="header-logo" onClick={scrollToTop} />
 
       {activeSection && onSectionChange && (

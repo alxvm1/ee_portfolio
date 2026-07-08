@@ -48,7 +48,7 @@ export const ProjectsList: FC<TProjectsListProps> = ({ category }) => {
               <div className="projects-list__item-info">
                 <img
                   src={project.thumbnail_url}
-                  alt=""
+                  alt={`Превью проекта «${project.title}»`}
                   className="projects-list__thumb"
                 />
                 <div className="projects-list__item-meta">
