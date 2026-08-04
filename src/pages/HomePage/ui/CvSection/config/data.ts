@@ -1,7 +1,7 @@
 import { SOCIAL_LINKS } from '@shared/config'
-import TelegramIcon from '../../../assets/svg/telegramIcon.svg?react'
-import VkIcon from '../../../assets/svg/vkIcon.svg?react'
-import BehanceIcon from '../../../assets/svg/behanceIcon.svg?react'
+import TelegramIcon from '@shared/assets/svg/telegramIcon.svg?react'
+import VkIcon from '@shared/assets/svg/vkIcon.svg?react'
+import BehanceIcon from '@shared/assets/svg/behanceIcon.svg?react'
 
 const businessCardInfo = [
 	{ title: 'Год рождения:', description: '2002' },
@@ -18,23 +18,21 @@ const socialLinks = [
 
 const specializations = [
 	{
-		title: 'UI/UX дизайн',
+		title: 'UI/UX - дизайн',
 		description:
-			'Интерфейсы, приложения — логичный, интуитивно понятный UI и современный UX.',
+			'Интерфейсы: логичный, интуитивно понятный UX и современный UI',
 	},
 	{
-		title: 'Web-дизайн',
-		description:
-			'Сайты: лэндинги, многостраничные. (создаю дизайн, для вёрстки необходим разработчик)',
+		title: 'Web - дизайн',
+		description: 'Дизайн сайтов: как лэндинги, так и многостраничные сайты',
 	},
 	{
 		title: 'Графический дизайн',
-		description:
-			'Печатная и сувенирная продукция: постеры, листовки, баннеры, упаковка, канцелярия и др. А также брендинг и карточки товара',
+		description: 'Печатная, рекламная продукция, брендинг',
 	},
 	{
 		title: 'Иллюстрации',
-		description: 'Любого жанра: от иллюстраций для детских книг до стрит-арта',
+		description: 'От стрит арта до иллюстрации для состояний интерфейса',
 	},
 ] as const
 
@@ -43,7 +41,7 @@ const education = [
 		place: 'ТГАСУ',
 		date: '2020–2024',
 		description:
-			'Томский государственный архитектурно-строительный университет, Архитектурный факультет, направление архитектуры',
+			'Томский государственный архитектурно-строительный университет, АФ, направление архитектуры',
 	},
 	{
 		place: 'Нетология',
@@ -54,7 +52,7 @@ const education = [
 		place: 'ТГАСУ',
 		date: '2024–2026',
 		description:
-			'Томский государственный архитектурно-строительный университет, Архитектурный факультет, направление графического дизайна',
+			'Томский государственный архитектурно-строительный университет, АФ, направление графического дизайна',
 	},
 	{
 		place: 'Skillbox',
@@ -68,9 +66,12 @@ const software = [
 	{ value: 80, label: 'Photoshop' },
 	{ value: 60, label: 'Illustrator' },
 	{ value: 60, label: 'CorelDRAW' },
-	{ value: 50, label: 'AI Tools' },
-	{ value: 40, label: '3ds Max' },
 ] as const
+
+const aiTools = {
+	title: 'AI Tools',
+	items: ['Nano Banana 2', 'Grok Imagine'],
+} as const
 
 export const CvSectionConfig = {
 	businessCardInfo,
@@ -78,4 +79,5 @@ export const CvSectionConfig = {
 	specializations,
 	education,
 	software,
+	aiTools,
 }

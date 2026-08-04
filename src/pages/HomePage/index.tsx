@@ -1,7 +1,4 @@
 import { type FC, useEffect, useState } from 'react'
-
-import { SOCIAL_LINKS } from '@shared/config'
-import { Button } from '@/shared/ui'
 import { Header } from '@widgets/Header'
 import { type THeaderSwitchOptions } from '@widgets/Header/ui/HeaderSwitch/types'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
@@ -9,6 +6,7 @@ import { homePageConfig } from './config'
 import './style.css'
 import { CvSection } from './ui/CvSection'
 import { PortfolioSection } from './ui/PortfolioSection'
+import { Footer } from '@/widgets/Footer'
 
 export const HomePage: FC = () => {
 	const location = useLocation()
@@ -38,23 +36,9 @@ export const HomePage: FC = () => {
 			/>
 			<main className='pt-[52px]'>
 				{activeSection === 'portfolio' ? <PortfolioSection /> : <CvSection />}
-				<div className='home-page__contacts'>
-					<p className='home-page__contacts-title-text'>КОНТАКТЫ</p>
-					<div className='home-page__contacts-buttons'>
-						<a
-							href={SOCIAL_LINKS.telegram}
-							target='_blank'
-							rel='noopener noreferrer'
-						>
-							<Button className='home-page__contacts-button'>Telegram</Button>
-						</a>
-						<a href={SOCIAL_LINKS.vk} target='_blank' rel='noopener noreferrer'>
-							<Button className='home-page__contacts-button'>ВКонтакте</Button>
-						</a>
-					</div>
-				</div>
 			</main>
 			<Outlet />
+			<Footer />
 		</>
 	)
 }

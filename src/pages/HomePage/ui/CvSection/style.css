@@ -49,8 +49,9 @@
 }
 
 .cv-section__item-background {
-	background-color: #161616;
+	background-color: transparent;
 	border-radius: 8px;
+	border: 1px solid #3c3c3c;
 	padding: 20px;
 }
 
@@ -81,7 +82,8 @@
 .cv-section__about {
 	display: flex;
 	flex-direction: column;
-	gap: 40px;
+	gap: 20px;
+	margin-bottom: 40px;
 }
 
 .cv-section__about-text {
@@ -109,31 +111,49 @@
 
 .cv-section__specializations {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	gap: 12px;
+	margin-bottom: 40px;
+
+	@media (max-width: 1076px) {
+		flex-direction: column;
+	}
 }
 
 .cv-section__specialization-item {
 	display: flex;
-	flex-direction: row;
-	gap: 32px;
-}
-
-.cv-section__specialization-content {
-	display: flex;
 	flex-direction: column;
+	max-height: 150px;
+	max-width: 260px;
+	width: 100%;
+
+	@media (max-width: 1076px) {
+		max-width: none;
+	}
 }
 
 .cv-section__education-list {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	gap: 12px;
+	margin-bottom: 40px;
+
+	@media (max-width: 1076px) {
+		flex-direction: column;
+	}
 }
 
 .cv-section__education-item {
 	display: flex;
 	flex-direction: column;
+	max-height: 223px;
+	max-width: 260px;
+	width: 100%;
 	gap: 8px;
+
+	@media (max-width: 1076px) {
+		max-width: none;
+	}
 }
 
 .cv-section__accent-title-text {
@@ -147,14 +167,62 @@
 	grid-template-columns: repeat(2, 1fr);
 	justify-items: center;
 	align-items: center;
-	gap: 12px;
+	gap: 24px;
+	margin-bottom: 40px;
 
-	@media (min-width: 768px) {
-		grid-template-columns: repeat(3, 1fr);
+	@media (min-width: 1076px) {
+		grid-template-columns: repeat(5, 1fr);
+		gap: 12px;
 	}
 }
 
 .cv-section__accordion {
 	flex: 1;
 	justify-content: space-between;
+}
+
+.cv-section__ai-tools {
+	grid-column: 1 / -1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	width: 100%;
+	max-width: 166px;
+	padding: 20px 12px;
+	border: 1px solid #3c3c3c;
+	border-radius: 8px;
+	text-align: center;
+
+	@media (min-width: 1076px) {
+		grid-column: auto;
+	}
+}
+
+.cv-section__ai-tools-title {
+	font-family: var(--font-bounded);
+	font-size: 20px;
+	color: #ffffff;
+	margin-bottom: 0;
+
+	@media (min-width: 1076px) {
+		font-size: 20px;
+	}
+}
+
+.cv-section__ai-tools-list {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.cv-section__ai-tools-item {
+	font-family: var(--font-gothic);
+	font-size: 16px;
+	color: #aaaaaa;
+
+	@media (min-width: 1076px) {
+		font-size: 16px;
+	}
 }

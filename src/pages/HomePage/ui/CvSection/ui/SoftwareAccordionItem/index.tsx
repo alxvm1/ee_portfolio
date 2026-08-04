@@ -17,6 +17,18 @@ export const SoftwareAccordionItem: FC = () => (
 				{CvSectionConfig.software.map(({ value, label }) => (
 					<CircularProgress key={label} value={value} label={label} />
 				))}
+				<div className='cv-section__ai-tools'>
+					<p className='cv-section__ai-tools-title'>
+						{CvSectionConfig.aiTools.title}
+					</p>
+					<ul className='cv-section__ai-tools-list'>
+						{CvSectionConfig.aiTools.items.map(item => (
+							<li key={item} className='cv-section__ai-tools-item'>
+								{item}
+							</li>
+						))}
+					</ul>
+				</div>
 			</div>
 		</AccordionContent>
 	</AccordionItem>

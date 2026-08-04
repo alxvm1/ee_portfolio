@@ -1,6 +1,6 @@
 export interface ICircularProgressProps {
-  value: number;
-  size?: number;
-  strokeWidth?: number;
-  label: string;
+	value: number
+	label: string
+	strokeWidth?: number
+	className?: string
 }

@@ -18,10 +18,8 @@ export const SpecializationsAccordionItem: FC = () => (
 						key={title}
 						className='cv-section__item-background cv-section__specialization-item'
 					>
-						<div className='cv-section__specialization-content'>
-							<p className='cv-section__title-text'>{title}</p>
-							<p className='cv-section__description-text'>{description}</p>
-						</div>
+						<p className='cv-section__title-text'>{title}</p>
+						<p className='cv-section__description-text'>{description}</p>
 					</div>
 				))}
 			</div>

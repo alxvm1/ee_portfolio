@@ -1,31 +1,38 @@
+import { cn } from '@shared/lib/utils'
 import { type FC } from 'react'
+import './style.css'
 import { type ICircularProgressProps } from './types'
+
+const VIEWBOX_SIZE = 166
 
 export const CircularProgress: FC<ICircularProgressProps> = ({
 	value,
-	size = 166,
-	strokeWidth = 6,
 	label,
+	strokeWidth = 6,
+	className,
 }) => {
-	const radius = (size - strokeWidth) / 2
+	const radius = (VIEWBOX_SIZE - strokeWidth) / 2
 	const circumference = 2 * Math.PI * radius
 	const offset = circumference - (value / 100) * circumference
 	const color = value >= 80 ? '#8bb220' : value <= 50 ? '#404040' : '#767676'
 
 	return (
-		<div className='relative' style={{ width: size, height: size }}>
-			<svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
+		<div className={cn('circular-progress', className)}>
+			<svg
+				viewBox={`0 0 ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`}
+				className='circular-progress__svg'
+			>
 				<circle
-					cx={size / 2}
-					cy={size / 2}
+					cx={VIEWBOX_SIZE / 2}
+					cy={VIEWBOX_SIZE / 2}
 					r={radius}
 					fill='none'
 					stroke='#161616'
 					strokeWidth={strokeWidth}
 				/>
 				<circle
-					cx={size / 2}
-					cy={size / 2}
+					cx={VIEWBOX_SIZE / 2}
+					cy={VIEWBOX_SIZE / 2}
 					r={radius}
 					fill='none'
 					stroke={color}
@@ -35,25 +42,9 @@ export const CircularProgress: FC<ICircularProgressProps> = ({
 					strokeLinecap='round'
 				/>
 			</svg>
-			<div className='absolute inset-0 flex flex-col items-center justify-center'>
-				<span
-					style={{
-						fontFamily: 'var(--font-bounded)',
-						fontSize: 20,
-						color: '#ffffff',
-					}}
-				>
-					{label}
-				</span>
-				<span
-					style={{
-						fontFamily: 'var(--font-gothic)',
-						fontSize: 20,
-						color: '#aaaaaa',
-					}}
-				>
-					{value}%
-				</span>
+			<div className='circular-progress__content'>
+				<span className='circular-progress__label'>{label}</span>
+				<span className='circular-progress__value'>{value}%</span>
 			</div>
 		</div>
 	)
